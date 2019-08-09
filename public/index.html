@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Chess with Vue</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Comfortaa&amp;display=swap'>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="ui" class="">
+	<div class="input">
+		<h1> Chess </h1>
+		<input type="text" id="inputText"/>
+		<button id="play">PLAY</button>
+		<div class="radio">
+			<button id="white">W</button>
+			<button id="black">B</button>
+		</div>
+	</div>
+</div>
+<div id="board">
+	<div class="containter">
+		<div class="row">
+			<div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
+		</div>
+		<div v-for="(row, idx) in field" class="row">
+			<div class="item">{{idx+1}}</div>
+			<div v-for="(square, idy) in row" 
+				  :class="'item ' + tileColors[square]+'-bg'" 
+				  v-on:click="handleClick(idx,idy)">
+				<i v-if="!pieces[idx][idy].isEmpty()" 
+					:class="pieces[idx][idy].getClass(false)">
+				</i>
+			</div>
+			<div class="item">{{idx+1}}</div>
+		</div>
+		<div class="row">
+			<div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
+		</div>
+	</div>
+	<div class="eatenPiecesContainer">
+		<div class="eatenPieces eatenWhite">
+				<i v-for="eatenPiece in eatenPieces.white.filter(e=>!e.isEmpty())" 
+					:class="eatenPiece.getClass(true)"></i>
+		</div>
+		<div class="info">
+			
+		</div>
+		<div class="eatenPieces eatenBlack">
+				<i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
+					:class="eatenPiece.getClass(true)"></i>
+		</div>
+	</div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'></script>
+<script  src="./script.js"></script>
+
+</body>
+</html>
