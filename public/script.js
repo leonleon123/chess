@@ -1,7 +1,8 @@
-const socket = io("http://localhost:3000");
+const socket = io("http://93.103.87.217:3000");
 socket.on("move", (data)=>{
 	app.movePiece(...data, false);
 });
+
 socket.open();
 // Constants are here so there is no hardcoded values in the code
 const pieceNames = {
@@ -36,6 +37,10 @@ const pieceOrder = [
 ]
 var color = "white";
 var roomName = "";
+socket.on("setColor", (data)=>{
+	color = data.color;
+	document.getElementById("color").innerHTML = color;
+});
 class Piece{
 	constructor(type, color, position){
 		this.type = type;
@@ -226,12 +231,10 @@ let app = new Vue({
 });
 
 window.addEventListener("load", ()=>{
-	document.getElementById("white").addEventListener("click", ()=> color = "white");
-	document.getElementById("black").addEventListener("click", ()=> color = "black");
 	document.getElementById("play").addEventListener("click", function(){
 		roomName = document.getElementById("inputText").value;
 		document.getElementById("roomName").innerHTML = roomName;
-		document.getElementById("color").innerHTML = color;
+		
 		socket.emit("join", {room:roomName});
 		document.getElementById("ui").classList.add("hidden");
 	});

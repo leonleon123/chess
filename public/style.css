@@ -121,4 +121,11 @@ h1{
 }
 #roomName{
 	font-size: 24px;
+	margin-left: 5px;
+}
+p{
+	margin: 2px;
+}
+.info > *{
+	margin-left: 5px;
 }

@@ -14,10 +14,6 @@
 		<h1> Chess </h1>
 		<input type="text" id="inputText"/>
 		<button id="play">PLAY</button>
-		<div class="radio">
-			<button id="white">W</button>
-			<button id="black">B</button>
-		</div>
 	</div>
 </div>
 <div id="board">
@@ -47,7 +43,7 @@
 		</div>
 		<div class="info">
 			<span>roomname: </span><span id="roomName"></span>
-			<p id="color"></span>
+			<p id="color"></p>
 		</div>
 		<div class="eatenPieces eatenBlack">
 				<i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
