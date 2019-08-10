@@ -230,6 +230,8 @@ window.addEventListener("load", ()=>{
 	document.getElementById("black").addEventListener("click", ()=> color = "black");
 	document.getElementById("play").addEventListener("click", function(){
 		roomName = document.getElementById("inputText").value;
+		document.getElementById("roomName").innerHTML = roomName;
+		document.getElementById("color").innerHTML = color;
 		socket.emit("join", {room:roomName});
 		document.getElementById("ui").classList.add("hidden");
 	});
