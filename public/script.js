@@ -1,8 +1,13 @@
 const socket = io("http://93.103.87.217:3000");
-socket.on("move", (data)=>{
-	app.movePiece(...data, false);
+var color = "white";
+var roomName = "";
+var start = false;
+socket.on("move", (data)=> app.movePiece(...data, false));
+socket.on("start", (data)=> start=data.start);
+socket.on("setColor", (data)=>{
+	color = data.color;
+	document.getElementById("color").innerHTML = color;
 });
-
 socket.open();
 // Constants are here so there is no hardcoded values in the code
 const pieceNames = {
@@ -35,12 +40,6 @@ const pieceOrder = [
 	pieceNames.KNIGHT,
 	pieceNames.ROOK
 ]
-var color = "white";
-var roomName = "";
-socket.on("setColor", (data)=>{
-	color = data.color;
-	document.getElementById("color").innerHTML = color;
-});
 class Piece{
 	constructor(type, color, position){
 		this.type = type;
@@ -214,7 +213,7 @@ let app = new Vue({
 			// Otherwise if the clicked tile has piece on it, it gets the available tiles to move to,
 			// if there is no piece on selected tile it does nothing
 			this.redrawField();
-			if(!this.pieces[x][y].isEmpty() && this.pieces[x][y].color == color){
+			if(!this.pieces[x][y].isEmpty() && this.pieces[x][y].color == color && start){
 				// Have to do it this way otherwise Vue doesn't detect the change and doest update the DOM
 				this.$set(this.field, x, [...this.field[x].slice(0,y), magicFieldNumbers.SELECTED , ...this.field[x].slice(y+1,8)]);
 				// This gets the available tiles to move to calculated for the selected piece

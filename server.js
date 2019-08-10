@@ -1,33 +1,27 @@
 const express = require("express");
-express.static(__dirname + "/");
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-const colors = ["white", "black"]
+const colors = ["white", "black"];
+
+express.static(__dirname + "/");
 app.use(express.static("public"))
-app.get("/", (req, res)=>{
-    res.sendFile(__dirname + "/index.html");
-});
-app.listen(4200);
+app.get("/", (req, res)=> res.sendFile(__dirname + "/index.html"));
+
 io.on('connect', (client) => { 
-    client.on("receive", (data)=>{
-        client.to(data.room).emit("move", data.move);
-    });
+    client.on("receive", (data)=> client.to(data.room).emit("move", data.move) );
     client.on("join", (data)=>{
         if(io.sockets.adapter.rooms[data.room]){
-            let len = io.sockets.adapter.rooms[data.room].length;
-            if(len < 2){
+            if(io.sockets.adapter.rooms[data.room].length < 2){
                 client.join(data.room);
+                io.in(data.room).emit("start", {start:true});
             }
-            
-            len = io.sockets.adapter.rooms[data.room].length;
-            console.log(`Player ${len} joined room ${data.room}!`);
-        }else{
+        }else 
             client.join(data.room);
-            let len = io.sockets.adapter.rooms[data.room].length;
-            console.log(`Player ${len} joined room ${data.room}!`);
-        }
+        console.log(`Player ${io.sockets.adapter.rooms[data.room].length} joined room ${data.room}!`);
         client.emit("setColor", {color:colors[io.sockets.adapter.rooms[data.room].length-1]});
     });
 });
+
+app.listen(4200);
 server.listen(3000);
