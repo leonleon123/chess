@@ -1,0 +1,30 @@
+export const pieceNames = {
+	PAWN: "pawn",
+	ROOK: "rook", 
+	KNIGHT: "knight", 
+	BISHOP: "bishop", 
+	QUEEN: "queen",
+	KING: "king"
+}
+export const fieldColors = {
+	BLACK: "black",
+	WHITE: "white",
+	GREEN: "green",
+	SELECTED: "yellow"
+}
+export const magicFieldNumbers = {
+	BLACK: 0,
+	WHITE: 1,
+	GREEN: 2,
+	SELECTED: 3
+}
+export const pieceOrder = [	
+	pieceNames.ROOK,
+	pieceNames.KNIGHT,
+	pieceNames.BISHOP,
+	pieceNames.QUEEN,
+	pieceNames.KING,
+	pieceNames.BISHOP,
+	pieceNames.KNIGHT,
+	pieceNames.ROOK
+]
