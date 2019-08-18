@@ -59,12 +59,12 @@ body{
 	cursor: pointer;
 }
 .eatenPieces{
-	height: 150px;
+	height: 200px;
 	background: lightsalmon;
 	padding: 20px 10px 20px;
 }
 .eatenPieces > i{
-	margin: 10px;
+	margin: 5px;
 }
 #board{
 	display: flex;
@@ -73,8 +73,8 @@ body{
 .eatenPiecesContainer{
 	display: flex;
 	flex-direction: column;
-	width: 180px;
-	height: 400px;
+	width: 220px;
+	height: 450px;
 	padding-left: 20px;
 }
 .eatenWhite{
@@ -84,9 +84,13 @@ body{
 	background: lightslategray;
 }
 .info{
-	height: 50px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	height: 200px;
 	background: lightsalmon;
 	margin: 6px 0px 6px;
+	padding: 10px 5px 10px;
 }
 #ui{
 	display: flex;
@@ -124,7 +128,7 @@ body{
 #inputText:focus{
 	outline: none;
 }
-#play{
+.button{
 	font-size: 24px;
 	font-family: 'Comfortaa', cursive;
 	margin: 10px;
@@ -138,6 +142,10 @@ body{
 #play:hover{
 	background: white;
 	color: lightseagreen;
+}
+#ready:hover{
+	background: white;
+	color: lightsalmon;
 }
 h1{
 	text-align: center;
@@ -153,6 +161,22 @@ p{
 	margin: 2px;
 }
 .info > *{
-	margin-left: 5px;
+	margin: 8px;
 	font-size: 12px;
+}
+.status{
+	height: 20px;
+	width: 20px;
+	border-radius: 100%;
+	background: darkred;
+}
+.infoWrapper{
+	display: flex;
+
+}
+.infoIndicators{
+	margin: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }

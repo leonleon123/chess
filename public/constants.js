@@ -28,3 +28,8 @@ export const pieceOrder = [
 	pieceNames.KNIGHT,
 	pieceNames.ROOK
 ]
+export const status = {
+	DISCONNECTED: "darkred",
+	CONNECTED: "orange",
+	READY: "limegreen"
+}

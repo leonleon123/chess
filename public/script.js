@@ -3,17 +3,25 @@ import {
 	pieceNames, 
 	fieldColors, 
 	magicFieldNumbers, 
-	pieceOrder} 
+	pieceOrder,
+	status
+} 
 from "./constants.js";
 const socket = io("http://93.103.87.217:3000");
-var color = "white";
-var roomName = "";
-var start = false;
 socket.on("move", (data)=> app.movePiece(...data, false));
-socket.on("start", (data)=> start=data.start);
-socket.on("setColor", (data)=>{
-	color = data.color;
-	document.getElementById("color").innerHTML = color;
+socket.on("setColor", (data)=> {
+	app.color = data.color;
+	socket.emit("status", {
+		room: app.roomName,
+		color: app.color,
+		status: status.CONNECTED
+	});
+});
+socket.on("status", (data)=>{
+	app.status[data.color] = (data.status == status.READY);
+	document.getElementById(data.color).style.backgroundColor = data.status;
+	if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
+		document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
 });
 socket.open();
 let app = new Vue({
@@ -39,6 +47,12 @@ let app = new Vue({
 			white: new Array(16).fill(new Piece("", "", [0,0])),
 			black: new Array(16).fill(new Piece("", "", [0,0])),
 			count: 0
+		},
+		color: "",
+		roomName:"",
+		status: {
+			white: false,
+			black: false
 		}
 	},
 	methods:{
@@ -62,10 +76,11 @@ let app = new Vue({
 						 [...this.pieces[x2].slice(0,y2), this.pieces[x1][y1].newPosition([x2, y2]), ...this.pieces[x2].slice(y2+1,8)]);
 			this.$set(this.pieces, x1, 
 						 [...this.pieces[x1].slice(0,y1), new Piece("", "", [x1, y1]), ...this.pieces[x1].slice(y1+1,8)]);
-			if(sendToServer) socket.emit("receive", {
-				move:[x1,y1,x2,y2],
-				room:roomName
-			});
+			if(sendToServer) 
+				socket.emit("receive", {
+					move:[x1,y1,x2,y2],
+					room:this.roomName
+				});
 		},
 		handleClick: function(x, y) {
 			// Checks if the clicked field is available to move the piece to
@@ -77,7 +92,9 @@ let app = new Vue({
 			// Otherwise if the clicked tile has piece on it, it gets the available tiles to move to,
 			// if there is no piece on selected tile it does nothing
 			this.redrawField();
-			if(!this.pieces[x][y].isEmpty() && this.pieces[x][y].color == color && start){
+			if(!this.pieces[x][y].isEmpty() && 
+				this.pieces[x][y].color == this.color &&
+				app.status.white && app.status.black){
 				// Have to do it this way otherwise Vue doesn't detect the change and doest update the DOM
 				this.$set(this.field, x, [...this.field[x].slice(0,y), magicFieldNumbers.SELECTED , ...this.field[x].slice(y+1,8)]);
 				// This gets the available tiles to move to calculated for the selected piece
@@ -95,13 +112,16 @@ let app = new Vue({
 
 window.addEventListener("load", ()=>{
 	document.getElementById("play").addEventListener("click", function(){
-		roomName = document.getElementById("inputText").value;
-		if(roomName.length == 0){
-			alert("room name has to be at least one letter long");
-			return;
-		}
-		document.getElementById("roomName").innerHTML = roomName;
-		socket.emit("join", {room:roomName});
+		app.roomName = document.getElementById("inputText").value;
+		if(app.roomName.length == 0) return alert("room name has to be at least one letter long");
+		socket.emit("join", { room:app.roomName });
 		document.getElementById("ui").classList.add("hidden");
+	});
+	document.getElementById("ready").addEventListener("click", function(){
+		socket.emit("status", {
+			room: app.roomName,
+			color: app.color,
+			status: status.READY
+		});
 	});
 });
