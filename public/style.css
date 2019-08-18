@@ -8,6 +8,7 @@ body{
 	align-items: center;
 	background: lightblue;
 	font-family: 'Comfortaa', cursive;
+	overflow: hidden;
 }
 .container{
 	display: flex;
@@ -168,7 +169,7 @@ p{
 	height: 20px;
 	width: 20px;
 	border-radius: 100%;
-	background: darkred;
+	background: red;
 }
 .infoWrapper{
 	display: flex;

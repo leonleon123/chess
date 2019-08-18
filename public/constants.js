@@ -29,7 +29,7 @@ export const pieceOrder = [
 	pieceNames.ROOK
 ]
 export const status = {
-	DISCONNECTED: "darkred",
+	DISCONNECTED: "red",
 	CONNECTED: "orange",
 	READY: "limegreen"
 }

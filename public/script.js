@@ -7,23 +7,26 @@ import {
 	status
 } 
 from "./constants.js";
-const socket = io("http://93.103.87.217:3000");
-socket.on("move", (data)=> app.movePiece(...data, false));
-socket.on("setColor", (data)=> {
-	app.color = data.color;
-	socket.emit("status", {
-		room: app.roomName,
-		color: app.color,
-		status: status.CONNECTED
+let socket;
+axios.get("/ip").then((res)=>{
+	socket = io(`http://${res.data.ip}:${res.data.port}`);
+	socket.on("move", (data)=> app.movePiece(...data, false));
+	socket.on("setColor", (data)=> {
+		app.color = data.color;
+		socket.emit("status", {
+			room: app.roomName,
+			color: app.color,
+			status: status.CONNECTED
+		});
 	});
+	socket.on("status", (data)=>{
+		app.status[data.color] = (data.status == status.READY);
+		document.getElementById(data.color).style.backgroundColor = data.status;
+		if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
+			document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
+	});
+	socket.open();
 });
-socket.on("status", (data)=>{
-	app.status[data.color] = (data.status == status.READY);
-	document.getElementById(data.color).style.backgroundColor = data.status;
-	if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
-		document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
-});
-socket.open();
 let app = new Vue({
 	el: "#board",
 	data: {
@@ -113,6 +116,7 @@ let app = new Vue({
 window.addEventListener("load", ()=>{
 	document.getElementById("play").addEventListener("click", function(){
 		app.roomName = document.getElementById("inputText").value;
+		if(!socket) return alert("we are having some problems, try again later!")
 		if(app.roomName.length == 0) return alert("room name has to be at least one letter long");
 		socket.emit("join", { room:app.roomName });
 		document.getElementById("ui").classList.add("hidden");
