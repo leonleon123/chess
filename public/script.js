@@ -4,13 +4,15 @@ import {
 	fieldColors, 
 	magicFieldNumbers, 
 	pieceOrder,
-	status
+	status,
+	rotation
 } 
 from "./constants.js";
 let socket;
 axios.get("/ip").then((res)=>{
 	socket = io(`http://${res.data.ip}:${res.data.port}`);
 	socket.on("move", (data)=> app.movePiece(...data, false));
+	socket.on("message", (data)=> app.messages.push(data));
 	socket.on("setColor", (data)=> {
 		app.color = data.color;
 		socket.emit("status", {
@@ -56,7 +58,9 @@ let app = new Vue({
 		status: {
 			white: false,
 			black: false
-		}
+		},
+		rot: rotation,
+		messages:[]
 	},
 	methods:{
 		// Redraws the whole field like it was in the beginning; removes all available or selected tiles
@@ -109,6 +113,11 @@ let app = new Vue({
 			}
 			// Updates the last selected location, used later in the movePiece() method
 			this.selectedLocation = [x,y];
+		},
+		switchSide: function(){
+			let tmp = this.rot[0];
+			this.$set(this.rot, 0, this.rot[1]);
+			this.$set(this.rot, 1, tmp);
 		}
 	}
 });
@@ -127,5 +136,17 @@ window.addEventListener("load", ()=>{
 			color: app.color,
 			status: status.READY
 		});
+	});
+	document.addEventListener("keydown", function(event){
+		if(	event.code=="Enter" && 
+			event.path[0].value.length > 0 && 
+			event.path[0].id=="messageInput"){
+				socket.emit("message", {
+					room: app.roomName,
+					user: app.color,
+					data: event.path[0].value
+				});
+				event.path[0].value = "";
+		}
 	});
 });

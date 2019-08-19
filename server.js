@@ -23,6 +23,7 @@ app.get("/ip", (req, res)=>{
 io.on('connect', (client) => { 
     client.on("receive", (data)=> client.to(data.room).emit("move", data.move) );
     client.on("status", (data)=> io.in(data.room).emit("status", data));
+    client.on("message", (data)=> io.in(data.room).emit("message", data));
     client.on("join", (data)=>{
         if(!io.sockets.adapter.rooms[data.room] || io.sockets.adapter.rooms[data.room].length < 2)
             client.join(data.room);

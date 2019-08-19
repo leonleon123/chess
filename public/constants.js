@@ -33,3 +33,4 @@ export const status = {
 	CONNECTED: "orange",
 	READY: "limegreen"
 }
+export const rotation = ["forward", "backward"]

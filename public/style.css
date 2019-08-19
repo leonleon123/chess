@@ -63,6 +63,7 @@ body{
 	height: 200px;
 	background: lightsalmon;
 	padding: 20px 10px 20px;
+	border-radius: 10px;
 }
 .eatenPieces > i{
 	margin: 5px;
@@ -71,12 +72,12 @@ body{
 	display: flex;
 	align-items: center;
 }
-.eatenPiecesContainer{
+.sidebarInfo{
 	display: flex;
 	flex-direction: column;
 	width: 220px;
 	height: 450px;
-	padding-left: 20px;
+	transition-duration: 0.8s;
 }
 .eatenWhite{
 	background: lightcoral;
@@ -92,6 +93,7 @@ body{
 	background: lightsalmon;
 	margin: 6px 0px 6px;
 	padding: 10px 5px 10px;
+	border-radius: 10px;
 }
 #ui{
 	display: flex;
@@ -102,6 +104,7 @@ body{
 	position: absolute;
 	top: 0;
 	background: lightseagreen;
+	z-index: 20;
 }
 .hidden{
 	visibility: hidden;
@@ -112,7 +115,7 @@ body{
 	justify-content: center;
 	align-items: center;
 }
-#inputText{
+.inputStyle{
 	height: 30px;
 	margin: 30px;
 	background: transparent;
@@ -126,7 +129,7 @@ body{
 #inputText::placeholder{
 	color: lightgray;
 }
-#inputText:focus{
+.inputStyle:focus{
 	outline: none;
 }
 .button{
@@ -143,6 +146,9 @@ body{
 #play:hover{
 	background: white;
 	color: lightseagreen;
+}
+#ready{
+	font-size: 20px;
 }
 #ready:hover{
 	background: white;
@@ -180,4 +186,47 @@ p{
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+}
+.forward{
+	transform: rotateY(0deg);
+	z-index: 2;
+}
+
+.backward{
+	transform: rotateY(180deg);
+	z-index: -1;
+}
+#toggleChat{
+	border: 0;
+	width: 70px;
+}
+#toggleInfo{
+	align-self: flex-end;
+	border: 0;
+	width: 70px;
+}
+.chat{
+	background: lightblue;
+	position: absolute;
+	align-items: center;
+}
+.messages{
+	width: 100%;
+	height: 80%;
+	background: whitesmoke;
+	transition-duration: 1s;
+	border-radius: 10px;
+}
+.forward > *{
+	opacity: 1;
+}
+.backward > *{
+	opacity: 0;
+	transition-duration: 0.3s;
+}
+#messageInput{
+	margin: 10px;
+	height: 30px;
+	padding: 0;
+	width: 90%;
 }
