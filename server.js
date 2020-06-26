@@ -13,12 +13,7 @@ axios.get("https://api.ipify.org").then((response)=>{
 express.static(__dirname + "/");
 app.use(express.static("public"))
 app.get("/", (req, res)=> res.sendFile(__dirname + "/index.html"));
-app.get("/ip", (req, res)=>{
-    res.send(JSON.stringify({
-        ip: ip,
-        port: port
-    }));
-});
+app.get("/ip", (req, res)=>res.send(JSON.stringify({ip: ip, port: port})));
 
 io.on('connect', (client) => { 
     client.on("receive", (data)=> client.to(data.room).emit("move", data.move) );

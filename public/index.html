@@ -1,85 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-	<meta charset="UTF-8">
-	<title>Quick chess</title>
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'>
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Comfortaa&amp;display=swap'>
-	<link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <title>Quick chess</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Comfortaa&amp;display=swap'>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div id="ui" class="">
-	<div class="input">
-		<h1>Quick chess</h1>
-		<input 
-			type="text" 
-			id="inputText" 
-			placeholder="room name (max 4 letters)"
-			maxlength="4"
-			class="inputStyle"
-		/>
-		<button id="play" class="button">Play</button>
-	</div>
+    <div class="input">
+        <h1>Quick chess</h1>
+        <input 
+            type="text" 
+            id="inputText" 
+            placeholder="room name (max 4 letters)"
+            maxlength="4"
+            class="inputStyle"
+        />
+        <button id="play" class="button">Play</button>
+    </div>
 </div>
 <div id="board">
-	<div class="containter">
-		<div class="row">
-			<div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
-		</div>
-		<div v-for="(row, idx) in field" class="row">
-			<div class="item">{{idx+1}}</div>
-			<div v-for="(square, idy) in row" 
-				  :class="'item ' + tileColors[square]+'-bg'" 
-				  v-on:click="handleClick(idx,idy)">
-				<i v-if="!pieces[idx][idy].isEmpty()" 
-					:class="pieces[idx][idy].getClass(false)">
-				</i>
-			</div>
-			<div class="item">{{idx+1}}</div>
-		</div>
-		<div class="row">
-			<div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
-		</div>
-	</div>
-	<div>
-		<div :class="'sidebarInfo chat ' + rot[1]">
-			<button v-on:click="switchSide()" id="toggleInfo" class="button">
-				<i class="fas fa-directions fa-lg"></i>
-			</button>
-			<div class="messages">
-				<p v-for="message in messages">
-					<strong>{{message.user}}: </strong>{{message.data}}
-				</p>
-			</div>
-			<input type="text" id="messageInput" class="inputStyle"/>
-		</div>
-		<div :class="'sidebarInfo ' + rot[0]">
-			<div class="eatenPieces eatenWhite">
-					<i v-for="eatenPiece in eatenPieces.white.filter(e=>!e.isEmpty())" 
-						:class="eatenPiece.getClass(true)">
-					</i>
-			</div>
-			<div class="infoWrapper">
-				<div class="info">
-					<span>roomname: <span id="roomName">{{roomName}}</span></span>
-					<span>color: <strong id="color">{{color}}</strong></span>
-					<button id="ready" class="button">Ready</button>
-					<br>
-					<button v-on:click="switchSide()" id="toggleChat" class="button">
-						<i class="fas fa-comment-dots fa-3x"></i>
-					</button>
-				</div>
-				<div class="infoIndicators">
-					<div class="status" id="white"></div>
-					<div class="status" id="black"></div>
-				</div>
-			</div>
-			<div class="eatenPieces eatenBlack">
-					<i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
-						:class="eatenPiece.getClass(true)"></i>
-			</div>
-		</div>
-	</div>
+    <div class="containter">
+        <div class="row">
+            <div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
+        </div>
+        <div v-for="(row, idx) in field" class="row">
+            <div class="item">{{idx+1}}</div>
+            <div v-for="(square, idy) in row" 
+                  :class="'item ' + tileColors[square]+'-bg'" 
+                  v-on:click="handleClick(idx,idy)">
+                <i v-if="!pieces[idx][idy].isEmpty()" 
+                    :class="pieces[idx][idy].getClass(false)">
+                </i>
+            </div>
+            <div class="item">{{idx+1}}</div>
+        </div>
+        <div class="row">
+            <div v-for="l in ' ABCDEFGH '.split('')" class="item">{{l}}</div>
+        </div>
+    </div>
+    <div>
+        <div :class="'sidebarInfo chat ' + rot[1]">
+            <a v-on:click="switchSide()" id="toggleInfo" class="button">
+                <i class="fas fa-info-circle fa-lg"></i>
+            </a>
+            <div class="messages">
+                <p v-for="message in messages">
+                    <strong>{{message.user}}: </strong>{{message.data}}
+                </p>
+            </div>
+            <input type="text" id="messageInput" class="inputStyle"/>
+        </div>
+        <div :class="'sidebarInfo ' + rot[0]">
+            <div class="eatenPieces eatenWhite">
+                    <i v-for="eatenPiece in eatenPieces.white.filter(e=>!e.isEmpty())" 
+                        :class="eatenPiece.getClass(true)">
+                    </i>
+            </div>
+            <div class="infoWrapper">
+                <div class="info">
+                    <span>roomname: <span id="roomName">{{roomName}}</span></span>
+                    <span>color: <strong id="color">{{color}}</strong></span>
+                    <a id="ready" class="button">Ready</a>
+                    <br>
+                    <a v-on:click="switchSide()" id="toggleChat" class="button">
+                        <i class="fas fa-comment-dots fa-3x"></i>
+                    </a>
+                </div>
+                <div class="infoIndicators">
+                    <div class="status" id="white"></div>
+                    <div class="status" id="black"></div>
+                </div>
+            </div>
+            <div class="eatenPieces eatenBlack">
+                    <i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
+                        :class="eatenPiece.getClass(true)"></i>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>

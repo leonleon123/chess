@@ -149,6 +149,7 @@ body{
 }
 #ready{
 	font-size: 20px;
+	text-align: center;
 }
 #ready:hover{
 	background: white;
@@ -198,12 +199,19 @@ p{
 }
 #toggleChat{
 	border: 0;
-	width: 70px;
+	text-align: center;
 }
 #toggleInfo{
+	width: 100%;
 	align-self: flex-end;
 	border: 0;
-	width: 70px;
+}
+#toggleInfo > *{
+	float: right;
+}
+#toggleInfo>i:hover, #toggleChat>i:hover{
+	color: darkslategray;
+	transition-duration: 0.7s;
 }
 .chat{
 	background: lightblue;
@@ -211,11 +219,13 @@ p{
 	align-items: center;
 }
 .messages{
-	width: 100%;
+	width: 90%;
 	height: 80%;
 	background: whitesmoke;
 	transition-duration: 1s;
 	border-radius: 10px;
+	padding: 5px;
+	overflow-y: auto;
 }
 .forward > *{
 	opacity: 1;
@@ -228,5 +238,8 @@ p{
 	margin: 10px;
 	height: 30px;
 	padding: 0;
+	padding-left: 10px;
 	width: 90%;
+	color: darkslategray;
+	text-align: left;
 }
