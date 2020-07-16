@@ -8,11 +8,13 @@ import {
     rotation
 } 
 from "./constants.js";
+let timer;
 const socket = io(window.location.href);
 socket.on("move", (data)=> app.movePiece(...data, false));
 socket.on("message", (data)=> app.messages.push(data));
 socket.on("setColor", (data)=> {
     app.color = data.color;
+    if(data.color == fieldColors.BLACK) app.status[fieldColors.WHITE] = status.CONNECTED
     socket.emit("status", {
         room: app.roomName,
         color: app.color,
@@ -20,12 +22,19 @@ socket.on("setColor", (data)=> {
     });
 });
 socket.on("status", (data)=>{
-    app.status[data.color] = (data.status == status.READY);
-    document.getElementById(data.color).style.backgroundColor = data.status;
-    if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
-        document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
+    app.status[data.color] = data.status;
+    if(app.status.white == status.READY && app.status.black == status.READY)
+        timer = setInterval(()=>{
+            app.times[app.turn] = app.times[app.turn] - 1
+        },1000)
 });
+socket.on("turn", (data)=>{
+    console.log(data)
+    app.turn = data.color
+})
 socket.open();
+
+const time = 300;
 let app = new Vue({
     el: "#board",
     data: {
@@ -53,12 +62,16 @@ let app = new Vue({
         color: "",
         roomName:"",
         status: {
-            white: false,
-            black: false
+            white: status.DISCONNECTED,
+            black: status.DISCONNECTED
         },
         rot: rotation,
-        turn:"",
-        messages:[]
+        turn:"white",
+        messages:[],
+        times: {
+            white: time,
+            black: time
+        }
     },
     methods:{
         // Redraws the whole field like it was in the beginning; removes all available or selected tiles
@@ -84,7 +97,8 @@ let app = new Vue({
             if(sendToServer) 
                 socket.emit("move", {
                     move:[x1,y1,x2,y2],
-                    room:this.roomName
+                    room:this.roomName,
+                    color:this.color
                 });
         },
         handleClick: function(x, y) {
@@ -99,7 +113,8 @@ let app = new Vue({
             this.redrawField();
             if(!this.pieces[x][y].isEmpty() && 
                 this.pieces[x][y].color == this.color &&
-                app.status.white && app.status.black){
+                this.status.white == status.READY && this.status.black == status.READY  &&
+                this.turn == this.color){
                 // Have to do it this way otherwise Vue doesn't detect the change and doest update the DOM
                 this.$set(this.field, x, [...this.field[x].slice(0,y), magicFieldNumbers.SELECTED , ...this.field[x].slice(y+1,8)]);
                 // This gets the available tiles to move to calculated for the selected piece
@@ -116,6 +131,9 @@ let app = new Vue({
             let tmp = this.rot[0];
             this.$set(this.rot, 0, this.rot[1]);
             this.$set(this.rot, 1, tmp);
+        },
+        formatTime: function(i){
+            return `${Math.floor(i/60)}:${(i%60+"").padStart(2,"0")}`
         }
     }
 });
@@ -136,7 +154,9 @@ window.addEventListener("load", ()=>{
         });
     });
     document.addEventListener("keydown", function(event){
-        if(event.code=="Enter" && event.path[0].value.length > 0 && event.path[0].id=="messageInput"){
+        if(event.code=="Enter" && 
+            event?.path[0]?.value?.length > 0 && 
+            event.path[0].id=="messageInput"){
                 socket.emit("message", {
                     room: app.roomName,
                     user: app.color,
@@ -145,4 +165,5 @@ window.addEventListener("load", ()=>{
                 event.path[0].value = "";
         }
     });
+    
 });

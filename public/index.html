@@ -54,7 +54,7 @@
             <input type="text" id="messageInput" class="inputStyle"/>
         </div>
         <div :class="'sidebarInfo ' + rot[0]">
-            <span>time1</span>
+            <span class="time" id="timeWhite">{{ formatTime(times.white) }}</span>
             <div class="eatenPieces eatenWhite">
                     <i v-for="eatenPiece in eatenPieces.white.filter(e=>!e.isEmpty())" 
                         :class="eatenPiece.getClass(true)">
@@ -71,15 +71,15 @@
                     </a>
                 </div>
                 <div class="infoIndicators">
-                    <div class="status" id="white"></div>
-                    <div class="status" id="black"></div>
+                    <div class="status" id="white" :style="{backgroundColor:status.white}"></div>
+                    <div class="status" id="black" :style="{backgroundColor:status.black}"></div>
                 </div>
             </div>
             <div class="eatenPieces eatenBlack">
                     <i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
                         :class="eatenPiece.getClass(true)"></i>
             </div>
-            <span>time2</span>
+            <span class="time" id="timeBlack">{{ formatTime(times.black) }}</span>
         </div>
     </div>
 </div>

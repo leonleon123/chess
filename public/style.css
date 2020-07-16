@@ -1,245 +1,255 @@
 html{
-	height: 100%;
+    height: 100%;
 }
 body{
-	display: flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-	background: lightblue;
-	font-family: 'Comfortaa', cursive;
-	overflow: hidden;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: lightblue;
+    font-family: 'Comfortaa', cursive;
+    overflow: hidden;
 }
 .container{
-	display: flex;
-	flex-direction:column;
+    display: flex;
+    flex-direction:column;
 }
 .row{
-	display: flex;
+    display: flex;
 }
 .item{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 50px;
-	height: 50px;
-	margin: 3px;
-	color: black;
-	transition-duration: 0.2s;
-	user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+    color: black;
+    transition-duration: 0.2s;
+    user-select: none;
 }
 .item:active{
-	border-radius: 50px;
+    border-radius: 50px;
 }
 .black-bg:hover, .white-bg:hover{
-	background: white;
+    background: white;
 }
 .black-bg{
-	background: lightcoral;
+    background: lightcoral;
 }
 .white-bg{
-	background: lightslategray;
+    background: lightslategray;
 }
 .green-bg{
-	background: limegreen;
-	border-radius: 20px;
-	cursor: pointer;
+    background: limegreen;
+    border-radius: 20px;
+    cursor: pointer;
 }
 .yellow-bg{
-	background: lightyellow;
-	border-radius: 20px;
-	box-shadow: inset 0px 0px 0px 3px limegreen;
+    background: lightyellow;
+    border-radius: 20px;
+    box-shadow: inset 0px 0px 0px 3px limegreen;
 }
 .black{
-	color: black;
+    color: black;
 }
 .white{
-	color: wheat;
+    color: wheat;
 }
 .fa-2x{
-	cursor: pointer;
+    cursor: pointer;
 }
 .eatenPieces{
-	height: 200px;
-	background: lightsalmon;
-	padding: 20px 10px 20px;
-	border-radius: 10px;
+    height: 200px;
+    background: lightsalmon;
+    padding: 20px 10px 20px;
+    border-radius: 10px;
 }
 .eatenPieces > i{
-	margin: 5px;
+    margin: 5px;
 }
 #board{
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 .sidebarInfo{
-	display: flex;
-	flex-direction: column;
-	width: 220px;
-	height: 450px;
-	transition-duration: 0.8s;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 450px;
+    transition-duration: 0.8s;
 }
 .eatenWhite{
-	background: lightcoral;
+    background: lightcoral;
 }
 .eatenBlack{
-	background: lightslategray;
+    background: lightslategray;
 }
 .info{
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	height: 200px;
-	background: lightsalmon;
-	margin: 6px 0px 6px;
-	padding: 10px 5px 10px;
-	border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+    background: lightsalmon;
+    margin: 6px 0px 6px;
+    padding: 10px 5px 10px;
+    border-radius: 10px;
 }
 #ui{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height:120%;
-	position: absolute;
-	top: 0;
-	background: lightseagreen;
-	z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height:120%;
+    position: absolute;
+    top: 0;
+    background: lightseagreen;
+    z-index: 20;
 }
 .hidden{
-	visibility: hidden;
+    visibility: hidden;
 }
 .input{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .inputStyle{
-	height: 30px;
-	margin: 30px;
-	background: transparent;
-	border: white 2px solid;
-	border-radius: 5px;
-	color: white;
-	padding: 2px 10px 2px;
-	font-size: 16px;
-	text-align: center;
+    height: 30px;
+    margin: 30px;
+    background: transparent;
+    border: white 2px solid;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 10px 2px;
+    font-size: 16px;
+    text-align: center;
 }
 #inputText::placeholder{
-	color: lightgray;
+    color: lightgray;
 }
 .inputStyle:focus{
-	outline: none;
+    outline: none;
 }
 .button{
-	font-size: 24px;
-	font-family: 'Comfortaa', cursive;
-	margin: 10px;
-	border: white 2px solid;
-	border-radius: 5px;
-	background: transparent;
-	cursor: pointer;
-	color: white;
-	width: 150px;
+    font-size: 24px;
+    font-family: 'Comfortaa', cursive;
+    margin: 10px;
+    border: white 2px solid;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    width: 150px;
 }
 #play:hover{
-	background: white;
-	color: lightseagreen;
+    background: white;
+    color: lightseagreen;
 }
 #ready{
-	font-size: 20px;
-	text-align: center;
+    font-size: 20px;
+    text-align: center;
 }
 #ready:hover{
-	background: white;
-	color: lightsalmon;
+    background: white;
+    color: lightsalmon;
 }
 h1{
-	text-align: center;
-	color: white;
-	font-size: 55px;
-	margin-bottom: 10px;
+    text-align: center;
+    color: white;
+    font-size: 55px;
+    margin-bottom: 10px;
 }
 #roomName{
-	font-size: 20px;
-	margin-left: 5px;
+    font-size: 20px;
+    margin-left: 5px;
 }
 p{
-	margin: 2px;
+    margin: 2px;
 }
 .info > *{
-	margin: 8px;
-	font-size: 12px;
+    margin: 8px;
+    font-size: 12px;
 }
 .status{
-	height: 20px;
-	width: 20px;
-	border-radius: 100%;
-	background: red;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    background: red;
 }
 .infoWrapper{
-	display: flex;
+    display: flex;
 
 }
 .infoIndicators{
-	margin: 15px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .forward{
-	transform: rotateY(0deg);
-	z-index: 2;
+    transform: rotateY(0deg);
+    z-index: 2;
 }
 
 .backward{
-	transform: rotateY(180deg);
-	z-index: -1;
+    transform: rotateY(180deg);
+    z-index: -1;
 }
 #toggleChat{
-	border: 0;
-	text-align: center;
+    border: 0;
+    text-align: center;
 }
 #toggleInfo{
-	width: 100%;
-	align-self: flex-end;
-	border: 0;
+    width: 100%;
+    align-self: flex-end;
+    border: 0;
 }
 #toggleInfo > *{
-	float: right;
+    float: right;
 }
 #toggleInfo>i:hover, #toggleChat>i:hover{
-	color: darkslategray;
-	transition-duration: 0.7s;
+    color: darkslategray;
+    transition-duration: 0.7s;
 }
 .chat{
-	background: lightblue;
-	position: absolute;
-	align-items: center;
+    background: lightblue;
+    position: absolute;
+    align-items: center;
 }
 .messages{
-	width: 90%;
-	height: 80%;
-	background: whitesmoke;
-	transition-duration: 1s;
-	border-radius: 10px;
-	padding: 5px;
-	overflow-y: auto;
+    width: 90%;
+    height: 80%;
+    background: whitesmoke;
+    transition-duration: 1s;
+    border-radius: 10px;
+    padding: 5px;
+    overflow-y: auto;
 }
 .forward > *{
-	opacity: 1;
+    opacity: 1;
 }
 .backward > *{
-	opacity: 0;
-	transition-duration: 0.3s;
+    opacity: 0;
+    transition-duration: 0.3s;
 }
 #messageInput{
-	margin: 10px;
-	height: 30px;
-	padding: 0;
-	padding-left: 10px;
-	width: 90%;
-	color: darkslategray;
-	text-align: left;
+    margin: 10px;
+    height: 30px;
+    padding: 0;
+    padding-left: 10px;
+    width: 90%;
+    color: darkslategray;
+    text-align: left;
+}
+.time{
+    margin: 5px;
+    text-align: center;
+}
+.ready{
+    background-color: limegreen;
+}
+.connected{
+    background-color: orange;
 }
