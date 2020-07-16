@@ -54,6 +54,7 @@
             <input type="text" id="messageInput" class="inputStyle"/>
         </div>
         <div :class="'sidebarInfo ' + rot[0]">
+            <span>time1</span>
             <div class="eatenPieces eatenWhite">
                     <i v-for="eatenPiece in eatenPieces.white.filter(e=>!e.isEmpty())" 
                         :class="eatenPiece.getClass(true)">
@@ -78,6 +79,7 @@
                     <i v-for="eatenPiece in eatenPieces.black.filter(e=>!e.isEmpty())" 
                         :class="eatenPiece.getClass(true)"></i>
             </div>
+            <span>time2</span>
         </div>
     </div>
 </div>

@@ -8,29 +8,24 @@ import {
     rotation
 } 
 from "./constants.js";
-let socket;
-axios.get("/ip").then((res)=>{
-    // currently doesn't work because of port forwarding
-    // socket = io(`http://${res.data.ip}:${res.data.port}`);
-    socket = io(`http://localhost:${res.data.port}`);
-    socket.on("move", (data)=> app.movePiece(...data, false));
-    socket.on("message", (data)=> app.messages.push(data));
-    socket.on("setColor", (data)=> {
-        app.color = data.color;
-        socket.emit("status", {
-            room: app.roomName,
-            color: app.color,
-            status: status.CONNECTED
-        });
+const socket = io(window.location.href);
+socket.on("move", (data)=> app.movePiece(...data, false));
+socket.on("message", (data)=> app.messages.push(data));
+socket.on("setColor", (data)=> {
+    app.color = data.color;
+    socket.emit("status", {
+        room: app.roomName,
+        color: app.color,
+        status: status.CONNECTED
     });
-    socket.on("status", (data)=>{
-        app.status[data.color] = (data.status == status.READY);
-        document.getElementById(data.color).style.backgroundColor = data.status;
-        if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
-            document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
-    });
-    socket.open();
 });
+socket.on("status", (data)=>{
+    app.status[data.color] = (data.status == status.READY);
+    document.getElementById(data.color).style.backgroundColor = data.status;
+    if(data.color == fieldColors.BLACK && data.status == status.CONNECTED) 
+        document.getElementById(fieldColors.WHITE).style.backgroundColor = data.status;
+});
+socket.open();
 let app = new Vue({
     el: "#board",
     data: {
@@ -62,6 +57,7 @@ let app = new Vue({
             black: false
         },
         rot: rotation,
+        turn:"",
         messages:[]
     },
     methods:{
@@ -86,7 +82,7 @@ let app = new Vue({
             this.$set(this.pieces, x1, 
                          [...this.pieces[x1].slice(0,y1), new Piece("", "", [x1, y1]), ...this.pieces[x1].slice(y1+1,8)]);
             if(sendToServer) 
-                socket.emit("receive", {
+                socket.emit("move", {
                     move:[x1,y1,x2,y2],
                     room:this.roomName
                 });
