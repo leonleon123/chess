@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/leonleon123/chess/issues"
   },
-  "homepage": "https://github.com/leonleon123/chess#readme"
+  "homepage": "https://github.com/leonleon123/chess#readme",
+  "engines": {
+    "node": "10.16.0"
+  }
 }
