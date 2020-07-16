@@ -1,5 +1,5 @@
 # simple chess
-Chess made with socket.io and Vue.
+Chess made with Node.js more specifically express and socket.io for back-end and Vue.js on front-end.
 
 To install dependencies just run `npm install` and then `npm start` or `node server.js` to run.
 
